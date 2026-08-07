@@ -785,7 +785,7 @@ const PATCH_CHANGES = [
 
 let view='home', heroSlug=null, roleFilter='all', quickSlug=null;
 let teamA=[null,null,null,null,null], teamB=[null,null,null,null,null], compareResult=null, picking=null;
-let admin={loggedIn:false, err:'', editSlug:null, bulkMsg:''};
+let admin={loggedIn:false, err:'', editSlug:null};
 
 const rc = s => `var(--r-${HEROES[s].role})`;
 const avatarInner = s => HEROES[s].img
@@ -1107,21 +1107,6 @@ function renderAdmin(){
     <button class="cta" id="addBtn" style="margin-top:12px">+ إضافة البطل</button>
   </div>
 
-  <div class="eyebrow">رفع الصور بالجملة</div>
-  <div class="addform">
-    ${DB_ENABLED? `
-    <p class="note" style="border:0;margin:0 0 10px;text-align:start">
-      اختر كل ملفات الصور دفعة واحدة. <b style="color:var(--bone)">اسم كل ملف يجب أن يطابق اسم البطل بالإنجليزية</b>
-      (المعرّف الظاهر بجانب كل اسم في الجدول أسفله) — مثلاً <span class="lat">esmeralda.jpg</span> أو
-      <span class="lat">khufra.png</span>. الصور تُرفع إلى Supabase Storage وتُربط تلقائياً بالبطل المطابق.
-    </p>
-    <label>اختر الصور</label>
-    <input type="file" id="bulkImg" multiple accept="image/*">
-    <button class="cta" id="bulkUploadBtn" style="margin-top:12px">رفع كل الصور المختارة</button>
-    <div id="bulkStatus" style="margin-top:10px;font-size:11.5px;color:var(--bone-2);text-align:start">${admin.bulkMsg||''}</div>
-    ` : `<p class="note" style="border:0;text-align:start">يتطلّب اتصال قاعدة بيانات فعّال (راجع README-database.md). حالياً غير متاح.</p>`}
-  </div>
-
   <div class="eyebrow">كل الأبطال · ${ks.length}</div>
   <div class="atable">
     <div class="arow ahead"><span>الاسم</span><span>الدور</span><span>الموقع</span><span>التير</span><span></span></div>
@@ -1147,15 +1132,6 @@ function renderAdmin(){
   <button class="backbtn" id="logoutBtn" style="margin-top:20px">تسجيل الخروج</button>`;
 }
 
-async function uploadHeroImage(file, slug){
-  const ext = (file.name.split('.').pop()||'jpg').toLowerCase();
-  const path = `${slug}.${ext}`;
-  const { error: upErr } = await sb.storage.from('hero-images').upload(path, file, { upsert: true, cacheControl: '3600' });
-  if(upErr) throw upErr;
-  const { data } = sb.storage.from('hero-images').getPublicUrl(path);
-  return data.publicUrl + '?v=' + Date.now(); // كسر ذاكرة التخزين المؤقت عند استبدال صورة موجودة
-}
-
 function bindAdmin(){
   const loginBtn = document.getElementById('aLoginBtn');
   if(loginBtn) loginBtn.addEventListener('click', async ()=>{
@@ -1164,7 +1140,7 @@ function bindAdmin(){
     loginBtn.disabled=true; loginBtn.textContent='جارٍ التحقّق…';
     if(DB_ENABLED){
       const { error } = await sb.auth.signInWithPassword({ email:u, password:p });
-      if(error) admin.err = (error.message||'بيانات الدخول غير صحيحة') + (error.message? ' (Supabase)':''); else { admin.loggedIn=true; admin.err=''; }
+      if(error) admin.err='بيانات الدخول غير صحيحة.'; else { admin.loggedIn=true; admin.err=''; }
     }else{
       if(u===ADMIN_USER && p===ADMIN_PIN){ admin.loggedIn=true; admin.err=''; }
       else admin.err='بيانات الدخول غير صحيحة.';
@@ -1175,35 +1151,6 @@ function bindAdmin(){
   if(logoutBtn) logoutBtn.addEventListener('click', async ()=>{
     if(DB_ENABLED) await sb.auth.signOut();
     admin.loggedIn=false; render();
-  });
-
-  const bulkBtn = document.getElementById('bulkUploadBtn');
-  if(bulkBtn) bulkBtn.addEventListener('click', async ()=>{
-    const input = document.getElementById('bulkImg');
-    const status = document.getElementById('bulkStatus');
-    const files = Array.from(input.files||[]);
-    if(!files.length){ alert('اختر صوراً أولاً.'); return; }
-    bulkBtn.disabled = true;
-    const matched=[], unmatched=[];
-    for(let i=0;i<files.length;i++){
-      const file = files[i];
-      status.textContent = `جارٍ الرفع… (${i+1}/${files.length}) ${file.name}`;
-      const base = file.name.replace(/\.[^.]+$/,'');
-      const slug = base.toLowerCase().replace(/[^a-z0-9]/g,'');
-      if(!HEROES[slug]){ unmatched.push(file.name); continue; }
-      try{
-        const url = await uploadHeroImage(file, slug);
-        HEROES[slug].img = url;
-        const { error } = await sb.from('heroes').update({img:url}).eq('slug', slug);
-        if(error) throw error;
-        matched.push(HEROES[slug].ar);
-      }catch(e){ unmatched.push(`${file.name} (${e.message||'خطأ رفع'})`); }
-    }
-    bulkBtn.disabled = false;
-    input.value = '';
-    admin.bulkMsg = `<b style="color:var(--jade)">نجح رفع ${matched.length} صورة.</b>` +
-      (unmatched.length? `<br><span style="color:var(--ember)">لم تُطابق أو فشلت (${unmatched.length}): ${unmatched.join('، ')}</span>` : '');
-    render();
   });
 
   const addBtn = document.getElementById('addBtn');
