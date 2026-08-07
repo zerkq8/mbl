@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --void:#06060A; --ink-1:#0B0C11; --ink-2:#111319; --ink-3:#181A22;
@@ -86,6 +87,8 @@ h1,h2,.kufi{font-family:'Noto Kufi Arabic',serif;font-weight:700;letter-spacing:
   background:radial-gradient(120% 90% at 50% 8%,color-mix(in srgb,var(--rc) 34%,transparent),transparent 62%),
   linear-gradient(180deg,var(--ink-2),var(--ink-1));display:grid;place-items:center;transition:.2s var(--ease)}
 .face b{font-family:'Chakra Petch';font-size:22px;font-weight:700;color:rgba(237,233,227,.34)}
+.face img,.mu-face img,.avatar img,.slot img,.pface img,.qface img,.mini .face img{
+  width:100%;height:100%;object-fit:cover;display:block}
 .face::after{content:'';position:absolute;inset:auto 0 0 0;height:2px;background:var(--rc);opacity:.75}
 .hcard:hover .face{border-color:var(--rc);transform:translateY(-3px)}
 .hcard:hover .face b{color:var(--bone)}
@@ -304,6 +307,16 @@ h1,h2,.kufi{font-family:'Noto Kufi Arabic',serif;font-weight:700;letter-spacing:
 <div id="quickpop"></div>
 
 <script>
+/* ══════════════════════════════════════════════════════════════
+   قاعدة البيانات (اختياري) — Supabase
+   ألصق قيمتيك هنا بعد إنشاء مشروعك على supabase.com (راجع README-database.md).
+   إن تركتهما كما هما، يعمل الموقع تماماً كما كان — بيانات محلية فقط بلا حفظ دائم.
+   ══════════════════════════════════════════════════════════════ */
+const SUPABASE_URL = 'PASTE_YOUR_SUPABASE_URL_HERE';
+const SUPABASE_ANON_KEY = 'PASTE_YOUR_SUPABASE_ANON_KEY_HERE';
+const DB_ENABLED = SUPABASE_URL.startsWith('http') && SUPABASE_ANON_KEY.length > 20;
+const sb = DB_ENABLED ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
 const PATCH = { version:'2.1.90', season:'S41 · Scarlet Embers', released:'٨ يوليو ٢٠٢٦',
   titleAr:'تعديلات منتصف الموسم — تقليم دبابات الأدغال' };
 
@@ -468,6 +481,13 @@ Object.keys(HEROES).forEach(slug=>{
   h.lane = LANE_OVERRIDE[slug] || LANE_DEFAULT[h.role];
   h.pop = POP[slug] || POP_DEFAULT;
 });
+
+/* روابط صور دائمة — أضف سطراً هنا لكل بطل تريد صورة حقيقية له، بدل الحرف الافتراضي.
+   استخدم رابط صورة تملك حقوقها أو مرخّصة للاستخدام (لا يجوز رفع صور Mobile Legends
+   الرسمية المحمية بحقوق Moonton). مثال: esmeralda: 'https://i.imgur.com/xxxxx.jpg', */
+const IMG_OVERRIDE = {
+};
+Object.keys(IMG_OVERRIDE).forEach(slug=>{ if(HEROES[slug]) HEROES[slug].img = IMG_OVERRIDE[slug]; });
 
 const COUNTERS = [
 ['esmeralda','dyrroth',94,3.7,'ضرره المئوي يخترق كل درع تبنيه'],
@@ -768,7 +788,10 @@ let teamA=[null,null,null,null,null], teamB=[null,null,null,null,null], compareR
 let admin={loggedIn:false, err:'', editSlug:null};
 
 const rc = s => `var(--r-${HEROES[s].role})`;
-const faceHTML = (s,extra)=> `<div class="face" style="--rc:${rc(s)}">${extra||''}<b>${HEROES[s].ar[0]}</b></div>`;
+const avatarInner = s => HEROES[s].img
+  ? `<img src="${HEROES[s].img}" alt="${HEROES[s].ar}" loading="lazy" onerror="this.remove()">`
+  : `<b>${HEROES[s].ar[0]}</b>`;
+const faceHTML = (s,extra)=> `<div class="face" style="--rc:${rc(s)}">${extra||''}${avatarInner(s)}</div>`;
 const hasCoverage = s => COUNTERS.some(c=>c[0]===s||c[1]===s);
 const dot = c => `<span class="dot ${c}"></span>`;
 
@@ -830,7 +853,7 @@ function renderHero(){
     const pct = delta!=null? 50+delta*8 : 50+(score-50)*0.6;
     return `<div class="matchup" style="--rc:${rc(opp)}">
       <div class="mu-head">
-        <div class="mu-face" data-quick="${opp}">${rankIndex!=null?`<span class="mu-rank num">${rankIndex+1}</span>`:''}<b>${HEROES[opp].ar[0]}</b></div>
+        <div class="mu-face" data-quick="${opp}">${rankIndex!=null?`<span class="mu-rank num">${rankIndex+1}</span>`:''}${avatarInner(opp)}</div>
         <div>
           <div class="mu-name" data-quick="${opp}">${headline}
             <span class="proof ${delta!=null?'real':''}">${delta!=null?'مقاس':'تحليلي'}</span></div>
@@ -853,7 +876,7 @@ function renderHero(){
   return `
   <div class="splash" style="--rc:${rc(heroSlug)}">
     <div class="splash-in">
-      <div class="avatar"><b>${h.ar[0]}</b></div>
+      <div class="avatar">${avatarInner(heroSlug)}</div>
       <div class="lat-name">${heroSlug.toUpperCase()}</div>
       <h2>${h.ar}</h2>
       <div class="meta-row">
@@ -955,7 +978,7 @@ function renderDraft(){
   const board = (team, key) => `<div class="tvs ${key==='a'?'ally':'enemy'}">
     <h4>${key==='a'?'الفريق الأول':'الفريق الثاني'} <span class="num">${team.filter(Boolean).length}/5</span></h4>
     <div class="slots">${team.map((s,i)=> s
-      ? `<div class="slot filled" style="--rc:${rc(s)}" data-slot="${key}:${i}"><b>${HEROES[s].ar[0]}</b><span class="x">✕</span></div>`
+      ? `<div class="slot filled" style="--rc:${rc(s)}" data-slot="${key}:${i}">${avatarInner(s)}<span class="x">✕</span></div>`
       : `<div class="slot" data-slot="${key}:${i}"><span class="plus">+</span></div>`).join('')}</div></div>`;
 
   let resultHTML = '';
@@ -965,9 +988,9 @@ function renderDraft(){
     const pctA = total? Math.round(scoreA/total*100) : 50;
     const verdict = scoreA>scoreB? 'الفريق الأول أفضل' : scoreB>scoreA? 'الفريق الثاني أفضل' : 'الفريقان متعادلان تقريباً';
     const pairRow = (p, winnerIsA) => `<div class="pairrow" style="--rc:${rc(p.w)}">
-      <div class="pface" data-quick="${p.w}"><b>${HEROES[p.w].ar[0]}</b></div>
+      <div class="pface" data-quick="${p.w}">${avatarInner(p.w)}</div>
       <span class="parrow">يقهر ›</span>
-      <div class="pface dim" data-quick="${p.l}"><b>${HEROES[p.l].ar[0]}</b></div>
+      <div class="pface dim" data-quick="${p.l}">${avatarInner(p.l)}</div>
       <div class="ptext"><b data-quick="${p.w}">${HEROES[p.w].ar}</b> ضد <b data-quick="${p.l}">${HEROES[p.l].ar}</b><p>${p.reason}</p></div>
       <span class="pscore">${p.score}</span></div>`;
 
@@ -1025,7 +1048,7 @@ function renderQuick(){
     <div class="qcard" style="--rc:${rc(quickSlug)}">
       <button class="qclose" data-qclose="1">✕</button>
       <div class="qhead">
-        <div class="qface"><b>${h.ar[0]}</b></div>
+        <div class="qface">${avatarInner(quickSlug)}</div>
         <div class="qname">${h.ar} <span class="qlane">(${h.lane})</span></div>
         <div class="qrole lat">${ROLES[h.role]} · ${quickSlug.toUpperCase()}</div>
       </div>
@@ -1048,13 +1071,16 @@ function renderAdmin(){
   if(!admin.loggedIn){
     return `<div class="loginbox">
       <div class="eyebrow" style="margin-top:0">دخول الإدارة</div>
-      <input id="au" placeholder="اسم المستخدم" autocomplete="off">
-      <input id="ap" placeholder="الرقم السري" type="password" autocomplete="off">
+      <input id="au" placeholder="${DB_ENABLED?'البريد الإلكتروني':'اسم المستخدم'}" autocomplete="off">
+      <input id="ap" placeholder="${DB_ENABLED?'كلمة المرور':'الرقم السري'}" type="password" autocomplete="off">
       <button class="cta" id="aLoginBtn" style="margin-top:2px">دخول</button>
       ${admin.err? `<div class="err">${admin.err}</div>`:''}
-      <p class="note" style="border:0;margin-top:14px;text-align:start">
+      ${DB_ENABLED? `<p class="note" style="border:0;margin-top:14px;text-align:start">
+        قاعدة البيانات متّصلة. سجّل الدخول بالحساب الذي أنشأته من Supabase → Authentication → Users.
+        التعديلات هنا تُحفظ بشكل دائم فعلياً.</p>`
+      : `<p class="note" style="border:0;margin-top:14px;text-align:start">
         بيانات الدخول الافتراضية: <b style="color:var(--bone)">admin</b> / <b style="color:var(--bone)">2026</b> —
-        غيّرها في كود الصفحة (ثابت ADMIN_USER وADMIN_PIN) قبل نشر الموقع علناً.</p>
+        قاعدة البيانات غير متّصلة بعد، فالتعديلات هنا مؤقتة لهذه الجلسة فقط. راجع README-database.md لربطها.</p>`}
     </div>`;
   }
 
@@ -1062,11 +1088,12 @@ function renderAdmin(){
   return `
   <div class="eyebrow">لوحة الإدارة</div>
   <div class="warnbox">
-    <b style="color:var(--gold)">تنبيه هام:</b> هذا موقع ثابت بلا خادم أو قاعدة بيانات. أي تعديل هنا (إضافة/تعديل/حذف بطل)
-    يعمل فوراً على الصفحة الحالية فقط، ولن يُحفظ بعد إغلاق المتصفح أو نشر الموقع. للتعديلات الدائمة الحقيقية
-    تحتاج ربط الموقع بقاعدة بيانات فعلية.<br>
-    كذلك اسم المستخدم والرقم السري مكتوبان داخل كود الصفحة نفسه ويمكن لأي شخص رؤيتهما من الكود المصدري —
-    هذه ليست حماية أمنية حقيقية، بل حاجز بسيط فقط.
+    ${DB_ENABLED
+      ? `<b style="color:var(--jade)">قاعدة البيانات متّصلة ✓</b> — كل تعديل هنا (إضافة/تعديل/حذف بطل، رفع صورة)
+         يُكتب فوراً في Supabase ويبقى محفوظاً بعد إعادة تحميل الصفحة أو نشر تحديث جديد للموقع.`
+      : `<b style="color:var(--gold)">تنبيه هام:</b> قاعدة البيانات غير متّصلة. أي تعديل هنا يعمل فوراً على الصفحة
+         الحالية فقط، ولن يُحفظ بعد إغلاق المتصفح. اسم المستخدم والرقم السري مكتوبان داخل كود الصفحة نفسه —
+         حاجز بسيط لا حماية حقيقية. راجع README-database.md لربط قاعدة بيانات حقيقية.`}
   </div>
 
   <div class="eyebrow">إضافة بطل جديد</div>
@@ -1075,6 +1102,7 @@ function renderAdmin(){
     <label>الاسم بالعربية</label><input id="nAr" placeholder="مثال: كاليا">
     <label>الدور</label><select id="nRole">${Object.entries(ROLES).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select>
     <label>الموقع المفضّل</label><input id="nLane" placeholder="مثال: خط الخبرة">
+    <label>رابط الصورة (اختياري)</label><input id="nImg" placeholder="https://...">
     <label>التير (اختياري)</label><select id="nTier"><option value="">بلا</option>${['S+','S','A','B','C'].map(t=>`<option>${t}</option>`).join('')}</select>
     <button class="cta" id="addBtn" style="margin-top:12px">+ إضافة البطل</button>
   </div>
@@ -1097,7 +1125,7 @@ function renderAdmin(){
       return `<div class="arow">
         <span>${h.ar} <span class="lat" style="color:var(--bone-3)">${k}</span></span>
         <span>${ROLES[h.role]}</span><span>${h.lane}</span><span>${h.tier||'—'}</span>
-        <span style="display:flex;gap:4px"><button class="abtn" data-edit="${k}">تعديل</button><button class="abtn del" data-del="${k}">حذف</button></span>
+        <span style="display:flex;gap:4px"><button class="abtn" data-edit="${k}">تعديل</button><button class="abtn" data-img="${k}" title="رابط صورة">${h.img?'🖼✓':'🖼'}</button><button class="abtn del" data-del="${k}">حذف</button></span>
       </div>`;
     }).join('')}
   </div>
@@ -1106,47 +1134,81 @@ function renderAdmin(){
 
 function bindAdmin(){
   const loginBtn = document.getElementById('aLoginBtn');
-  if(loginBtn) loginBtn.addEventListener('click', ()=>{
+  if(loginBtn) loginBtn.addEventListener('click', async ()=>{
     const u=document.getElementById('au').value.trim();
     const p=document.getElementById('ap').value.trim();
-    if(u===ADMIN_USER && p===ADMIN_PIN){ admin.loggedIn=true; admin.err=''; }
-    else admin.err='بيانات الدخول غير صحيحة.';
+    loginBtn.disabled=true; loginBtn.textContent='جارٍ التحقّق…';
+    if(DB_ENABLED){
+      const { error } = await sb.auth.signInWithPassword({ email:u, password:p });
+      if(error) admin.err='بيانات الدخول غير صحيحة.'; else { admin.loggedIn=true; admin.err=''; }
+    }else{
+      if(u===ADMIN_USER && p===ADMIN_PIN){ admin.loggedIn=true; admin.err=''; }
+      else admin.err='بيانات الدخول غير صحيحة.';
+    }
     render();
   });
   const logoutBtn = document.getElementById('logoutBtn');
-  if(logoutBtn) logoutBtn.addEventListener('click', ()=>{ admin.loggedIn=false; render(); });
+  if(logoutBtn) logoutBtn.addEventListener('click', async ()=>{
+    if(DB_ENABLED) await sb.auth.signOut();
+    admin.loggedIn=false; render();
+  });
 
   const addBtn = document.getElementById('addBtn');
-  if(addBtn) addBtn.addEventListener('click', ()=>{
+  if(addBtn) addBtn.addEventListener('click', async ()=>{
     const en=document.getElementById('nEn').value.trim();
     const ar=document.getElementById('nAr').value.trim();
     const role=document.getElementById('nRole').value;
     const lane=document.getElementById('nLane').value.trim() || LANE_DEFAULT[role];
+    const img=document.getElementById('nImg').value.trim() || null;
     const tier=document.getElementById('nTier').value || null;
     if(!en||!ar){ alert('أدخل الاسمين بالإنجليزية والعربية.'); return; }
     const slug = en.toLowerCase().replace(/[^a-z0-9]/g,'');
     if(!slug){ alert('اسم إنجليزي غير صالح.'); return; }
     if(HEROES[slug]){ alert('هذا المعرّف موجود مسبقاً: '+slug); return; }
-    HEROES[slug] = {ar, role, lane, tier, pop:POP_DEFAULT};
+    const pop = POP_DEFAULT;
+    HEROES[slug] = {ar, role, lane, tier, img, pop};
     render();
+    if(DB_ENABLED){
+      const { error } = await sb.from('heroes').insert({slug, ar, role, lane, tier, img, pop});
+      if(error) alert('حُفظ محلياً لكن فشل الحفظ في قاعدة البيانات: '+error.message);
+    }
   });
 
   document.querySelectorAll('[data-edit]').forEach(el=>el.addEventListener('click', ()=>{ admin.editSlug=el.dataset.edit; render(); }));
   document.querySelectorAll('[data-canceledit]').forEach(el=>el.addEventListener('click', ()=>{ admin.editSlug=null; render(); }));
-  document.querySelectorAll('[data-save]').forEach(el=>el.addEventListener('click', ()=>{
+  document.querySelectorAll('[data-save]').forEach(el=>el.addEventListener('click', async ()=>{
     const slug=el.dataset.save, h=HEROES[slug];
     h.ar = document.getElementById('e_ar').value.trim() || h.ar;
     h.role = document.getElementById('e_role').value;
     h.lane = document.getElementById('e_lane').value.trim() || LANE_DEFAULT[h.role];
     h.tier = document.getElementById('e_tier').value || null;
     admin.editSlug=null; render();
+    if(DB_ENABLED){
+      const { error } = await sb.from('heroes').update({ar:h.ar, role:h.role, lane:h.lane, tier:h.tier}).eq('slug', slug);
+      if(error) alert('حُفظ محلياً لكن فشل الحفظ في قاعدة البيانات: '+error.message);
+    }
   }));
-  document.querySelectorAll('[data-del]').forEach(el=>el.addEventListener('click', ()=>{
+  document.querySelectorAll('[data-img]').forEach(el=>el.addEventListener('click', async ()=>{
+    const slug=el.dataset.img, h=HEROES[slug];
+    const url=prompt(`رابط صورة ${h.ar} (اتركه فارغاً لحذف الصورة والعودة للحرف الافتراضي):`, h.img||'');
+    if(url===null) return;
+    if(url.trim()) h.img=url.trim(); else delete h.img;
+    render();
+    if(DB_ENABLED){
+      const { error } = await sb.from('heroes').update({img: h.img||null}).eq('slug', slug);
+      if(error) alert('حُفظت الصورة محلياً لكن فشل الحفظ في قاعدة البيانات: '+error.message);
+    }
+  }));
+  document.querySelectorAll('[data-del]').forEach(el=>el.addEventListener('click', async ()=>{
     const slug=el.dataset.del;
-    if(!confirm(`حذف ${HEROES[slug].ar} نهائياً من هذه الجلسة؟`)) return;
+    if(!confirm(`حذف ${HEROES[slug].ar} نهائياً${DB_ENABLED?' من قاعدة البيانات':' من هذه الجلسة'}؟`)) return;
     delete HEROES[slug];
     for(let i=COUNTERS.length-1;i>=0;i--) if(COUNTERS[i][0]===slug||COUNTERS[i][1]===slug) COUNTERS.splice(i,1);
     render();
+    if(DB_ENABLED){
+      const { error } = await sb.from('heroes').delete().eq('slug', slug);
+      if(error) alert('حُذف محلياً لكن فشل الحذف من قاعدة البيانات: '+error.message);
+    }
   }));
 }
 
@@ -1206,7 +1268,42 @@ function bindDynamic(){
   bindAdmin();
 }
 
-render();
+/* ══════════════════════════════════════════════════════════════
+   الإقلاع — يحاول القراءة من Supabase أولاً، ويرجع للبيانات المحلية
+   الجاهزة أعلاه إن لم تُفعَّل قاعدة البيانات أو تعذّر الاتصال
+   ══════════════════════════════════════════════════════════════ */
+async function loadFromDB(){
+  if(!DB_ENABLED) return;
+  try{
+    const { data: heroRows, error: e1 } = await sb.from('heroes').select('*');
+    if(e1) throw e1;
+    const { data: counterRows, error: e2 } = await sb.from('counters').select('*');
+    if(e2) throw e2;
+    if(heroRows && heroRows.length){
+      const fresh = {};
+      heroRows.forEach(r=>{
+        fresh[r.slug] = {
+          ar:r.ar, role:r.role, lane:r.lane, tier:r.tier||null, img:r.img||null, pop:r.pop||34,
+          overview:r.overview||undefined, notes:r.notes||undefined,
+          combos:r.combos||undefined, skillOrder:r.skill_order||undefined, build:r.build||undefined,
+        };
+      });
+      Object.keys(HEROES).forEach(k=>delete HEROES[k]);
+      Object.assign(HEROES, fresh);
+    }
+    if(counterRows){
+      COUNTERS.length = 0;
+      counterRows.forEach(r=> COUNTERS.push([r.subject, r.counter, r.score, r.delta, r.reason]));
+    }
+  }catch(err){
+    console.warn('تعذّر الاتصال بقاعدة البيانات — يعمل الموقع بالبيانات المحلية.', err);
+  }
+}
+
+(async function boot(){
+  await loadFromDB();
+  render();
+})();
 </script>
 </body>
 </html>
