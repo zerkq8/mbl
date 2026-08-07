@@ -312,8 +312,8 @@ h1,h2,.kufi{font-family:'Noto Kufi Arabic',serif;font-weight:700;letter-spacing:
    ألصق قيمتيك هنا بعد إنشاء مشروعك على supabase.com (راجع README-database.md).
    إن تركتهما كما هما، يعمل الموقع تماماً كما كان — بيانات محلية فقط بلا حفظ دائم.
    ══════════════════════════════════════════════════════════════ */
-const SUPABASE_URL = 'PASTE_YOUR_SUPABASE_URL_HERE';
-const SUPABASE_ANON_KEY = 'PASTE_YOUR_SUPABASE_ANON_KEY_HERE';
+const SUPABASE_URL = 'https://sskbuqlyeotpxluppuoq.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_KhWFcOiAvSaQb0LsdRbDCQ_G4PCVE7o';
 const DB_ENABLED = SUPABASE_URL.startsWith('http') && SUPABASE_ANON_KEY.length > 20;
 const sb = DB_ENABLED ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
