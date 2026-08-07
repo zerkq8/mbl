@@ -312,8 +312,8 @@ h1,h2,.kufi{font-family:'Noto Kufi Arabic',serif;font-weight:700;letter-spacing:
    ألصق قيمتيك هنا بعد إنشاء مشروعك على supabase.com (راجع README-database.md).
    إن تركتهما كما هما، يعمل الموقع تماماً كما كان — بيانات محلية فقط بلا حفظ دائم.
    ══════════════════════════════════════════════════════════════ */
-const SUPABASE_URL = 'https://sskbuqlyeotpxluppuoq.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_KhWFcOiAvSaQb0LsdRbDCQ_G4PCVE7o';
+const SUPABASE_URL = 'PASTE_YOUR_SUPABASE_URL_HERE';
+const SUPABASE_ANON_KEY = 'PASTE_YOUR_SUPABASE_ANON_KEY_HERE';
 const DB_ENABLED = SUPABASE_URL.startsWith('http') && SUPABASE_ANON_KEY.length > 20;
 const sb = DB_ENABLED ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
@@ -499,14 +499,23 @@ const COUNTERS = [
 ['sora','melissa',90,2.9,'تستنزفه من نطاق آمن قبل الاشتباك'],
 ['sora','phoveus',88,2.5,'يعاقب كل اندفاعاته تلقائياً'],
 ['sora','khufra',82,2.1,'يُلغي اندفاعه ويجمّده وسط فريقه'],
+['sora','lukas',62,null,'يستنزفه بمبارزة مستمرة في الخط'],
+['sora','alice',60,null,'تتغذّى على ضرره وتصمد أمامه'],
 ['phoveus','granger',72,null,'يستنزفه من مسافة بلا اقتراب'],
 ['phoveus','paquito',70,null,'لكماته السريعة تفوق بقاءه'],
 ['khufra','lunox',68,null,'تتجاوز كرته عبر أشكالها المزدوجة'],
 ['khufra','xavier',65,null,'يقصفه من مدى بعيد بلا اقتراب'],
-['khufra','gusion',63,null,'انفجاره السريع يسبق رد فعله'],
+['gusion','khufra',63,null,'كرته الرملية تُلغي اندفاعاته وتقطع تسلسل كومبوه'],
 ['melissa','layla',72,null,'مدى مماثل يستنزفها مبكراً'],
-['melissa','vale',75,null,'يقتحم مظلتها بمهارات لا تُمنع'],
-['melissa','yin',78,null,'يلاحقها عبر التضاعف بلا مهرب'],
+['melissa','vale',72,2.8,'يقتحم مظلتها بمهارات لا تُمنع'],
+['melissa','yin',70,2.6,'يلاحقها عبر التضاعف بلا مهرب'],
+['melissa','martis',63,2.0,'قفزاته المتكررة تتجاوز مظلتها'],
+['melissa','zilong',62,2.0,'دوراته السريعة تخترق دفاعها'],
+['melissa','gatotkaca',60,1.8,'يهيمن عليها بضرر متصاعد مستمر'],
+['melissa','harley',68,2.4,'يقتحمها بالتخفّي والظهور المفاجئ'],
+['melissa','nana',64,2.0,'تحوّلها يُفلت الهدف من مظلتها'],
+['melissa','aurora',61,1.8,'تجميدها يمنع تفعيل المظلة'],
+['melissa','pharsa',61,1.8,'تستنزفها من مدى أبعد من مظلتها'],
 ['melissa','hayabusa',85,null,'يصلها من الظل قبل تفعيل مظلتها'],
 ['hayabusa','chip',77,null,'يقاطع سلسلة ظلاله بالتحكّم المتكرر'],
 ['hayabusa','eudora',73,null,'صعقتها الفورية تُنهي كومبوه قبل أن يبدأ'],
@@ -520,18 +529,83 @@ const COUNTERS = [
 ['fanny','masha',65,3.0,'ضغطها المستمر يفوق بقاء فاني'],
 ['fanny','lukas',63,2.7,'يطاردها بنفس مستوى حركتها'],
 ['fanny','moskov',60,3.0,'رمحه يخترقها من مسافة الأمان'],
+['fanny','kalea',75,2.5,'تحكّمها الثابت يمنع تحرّرها بالحبال'],
+['fanny','badang',73,2.5,'قبضته تُمسكها قبل أن تُفلت'],
+['fanny','bruno',68,2.7,'كراته المرتدة تستنزفها من مسافة'],
+['fanny','brody',66,2.5,'ضربات متتالية تلاحق حركتها العالية'],
+['fanny','obsidia',65,2.3,'ضغط مستمر يستنزف طاقتها بسرعة'],
+['fanny','franco',64,2.6,'يخطّفها من منتصف حبل معلَّق'],
+['fanny','chou',63,2.3,'ركلته تقاطع حبالها في أي لحظة'],
+['freya','phoveus',82,4.7,'يعاقب كل مهاراتها التي تحمل مكوّن حركة'],
+
+['masha','granger',64,null,'يستنزفها من مدى بعيد قبل أن تقترب'],
+['masha','miya',58,null,'ضررها المستمر يستنزف أشرطة دمها الثلاثة'],
+['masha','aulus',58,null,'سرعة هجومه المتصاعدة تتفوّق على مبارزتها'],
+['masha','badang',58,null,'قبضته تقاطع اندفاعها المتكرر'],
+['masha','cici',55,null,'تعافيها المستمر يتفوّق على نقص تجدّدها'],
+['masha','thamuz',55,null,'تجدّده المستمر يفوق ضغطها القصير'],
+
+['hirara','saber',68,3.3,'ألته الفورية تكشفها وتقتلها بسرعة'],
+['hirara','odette',67,3.2,'ألتها الدائرية تحاصرها بلا مهرب'],
+['hirara','cyclops',65,2.8,'تجميده يقاطع اندفاعاتها المتكررة'],
+['hirara','alucard',63,2.3,'مبارزة سريعة تفوق حركتها'],
+['hirara','phoveus',62,2.2,'يعاقب اندفاعاتها المتكررة تلقائياً'],
+
+['lukas','balmond',72,3.6,'يستنزفه بمبارزة مستمرة تفوق طاقته'],
+['lukas','baxia',65,2.8,'بقاؤه المرتفع يستوعب ضغطه المبكر'],
+['lukas','thamuz',64,2.6,'تجدّده المستمر يفوق ضغطه القصير'],
+['lukas','phoveus',63,2.5,'يعاقب اندفاعاته المتكررة تلقائياً'],
+['lukas','dyrroth',62,2.4,'ضرره المئوي يخترق دفاعه المتصاعد'],
+['lukas','minsitthar',61,2.4,'ألته تمنع كل حركاته الخاصة'],
+
+['carmilla','valentina',65,null,'تسرق قدراتها وتقلب اشتباكها'],
+['carmilla','wanwan',62,null,'تتجاهل ربطها وتضربها من زاوية غير متوقعة'],
+['carmilla','xborg',58,null,'يخترق روابطها بضرر مستمر'],
+
+['kalea','tigreal',60,null,'يهيمن عليها في بداية اللعبة قبل أن تتصاعد'],
+['kalea','carmilla',58,null,'تهيمن عليها في بداية اللعبة قبل أن تتصاعد'],
+['kalea','xborg',56,null,'يهيمن عليها في بداية اللعبة قبل أن تتصاعد'],
+
+['obsidia','miya',56,null,'ضررها المستمر يستنزفه في المبارزة الطويلة'],
+['saber','miya',54,null,'تفلت من ألته المستقيمة وتردّ الهجوم'],
+['miya','marcel',60,null,'تحكّمه المتسلسل يُثبّتها بلا هروب'],
+['miya','lolita',58,null,'تحكّمها المتسلسل يُثبّتها بلا هروب'],
+['miya','khufra',58,null,'تحكّمه المتسلسل يُثبّتها بلا هروب'],
+['miya','minotaur',56,null,'تحكّمه المتسلسل يُثبّتها بلا هروب'],
+['miya','gord',56,null,'نافذة انفجاره تفتح عليها فور اقترابها'],
+
+['marcel','angela',75,5.0,'تدعم حاملها لتفادي التجمّع في نطاق ألته'],
+['marcel','lesley',73,4.1,'تقنصه من مدى بعيد قبل أن يقترب'],
+['marcel','rafaela',72,4.0,'علاجها المستمر يفوق ضغط تحكّمه'],
+['marcel','cyclops',68,3.5,'يجمّده أثناء قناة مهارته الأولى'],
+['marcel','odette',67,3.1,'ألتها الدائرية تحاصره قبل أن يُثبّت فريقه'],
+['marcel','franco',65,null,'يخطّفه قبل أن يُشعل ألته الجماعية'],
+['marcel','yin',63,null,'ألته تعزله عن فريقه فيفقد تأثيره'],
+['marcel','valentina',66,null,'تسرق ألته وتقلبها ضد فريقه'],
 ['estes','baxia',88,null,'يقلّل كل علاجه بنسبة كبيرة'],
 ['estes','dyrroth',65,null,'ضرره المئوي يتجاوز فائدة العلاج'],
 ['estes','freya',62,null,'مبارزتها السريعة تسبق دورة العلاج'],
+['estes','sora',68,3.9,'ضغطه المبكر يفوق علاجها المستمر'],
+['estes','yin',63,2.5,'اغتيال سريع يعاقب وقوفها الثابت'],
+['estes','guinevere',60,1.7,'ألتها الجماعية تتجاوز علاجها الفردي'],
+['estes','luoyi',65,3.2,'تسحبها لبعد آخر بلا حماية فريقها'],
+['estes','vale',58,1.5,'إعصاره يستنزفها من بعيد'],
+['estes','nolan',60,null,'يقتلها بسرعة قبل أن تُتمّ علاجها'],
+['estes','atlas',58,null,'يسحبها بعيداً عن فريقها المحتاج للعلاج'],
+['estes','tigreal',56,null,'يفتح عليها الاشتباك قبل استعدادها'],
+['estes','franco',56,null,'يخطّفها بعيداً عن الفريق'],
 ['zhuxin','khufra',75,null,'يمنع أي هروب بعد سلاسلها'],
 ['zhuxin','fanny',70,null,'تصلها بسرعة قبل إكمال السلسلة'],
 ['zhuxin','hayabusa',68,null,'يصلها من الظل بضرر انفجاري سريع'],
 ['zhuxin','lancelot',66,null,'يقتحمها قبل أن تُثبّت السلاسل'],
+['zhuxin','zhask',60,null,'ألته الفورية تدمّرها قبل أن تُشعل قناتها'],
+['zhuxin','ling',58,null,'حركته العالية تفلت من سلاسلها'],
 ['dyrroth','baxia',60,null,'بقاؤه المرتفع يمتص انفجاره القصير'],
 ['dyrroth','terizla',66,null,'دفاعه المرتفع يستوعب انفجاره'],
 ['dyrroth','guinevere',64,null,'ترفعه في الهواء قبل أن يبدأ هجومه'],
-['atlas','karrie',68,null,'ضررها الحقيقي يتجاهل دفاعه'],
-['atlas','cecilion',66,null,'ضررها التراكمي يفوق بقاءه'],
+['atlas','valentina',81,5.7,'تسرق ألته وتقلب السحبة الجماعية لصالحها'],
+['atlas','wanwan',78,3.4,'حركتها العالية تفلت من نطاق سحبه'],
+['atlas','hirara',78,3.4,'اغتيال سريع يعاقب أي محاولة دخول مبكرة'],
 ['minsitthar','ling',82,null,'ألته تمنع كل حركاته الخاصة'],
 ['minsitthar','martis',65,null,'قفزته تصل قبل أن يُثبّت هدفه'],
 ['minsitthar','harith',63,null,'يقتحمه من بعيد بلا اعتماد على الاندفاع'],
@@ -539,42 +613,42 @@ const COUNTERS = [
 ['layla','hayabusa',80,null,'ظلاله تصلها من زوايا غير متوقعة'],
 ['layla','saber',75,null,'ألته الفورية تُنهيها قبل أي رد فعل'],
 ['layla','alucard',70,null,'يقفز إليها ويمتص دمها بسرعة'],
+['layla','atlas',72,3.7,'يسحبها ويثبّتها حتى ينهار فريقها'],
+['layla','johnson',70,3.3,'سيارته تحاصرها حتى ينهار فريقها'],
+['layla','hylos',65,2.2,'يلاحقها بلا توقف ولا هروب'],
+['layla','tigreal',63,2.0,'سلسلة تحكّمه تُثبّتها وسط الاشتباك'],
+['layla','grock',62,1.7,'تحكّمه المتسلسل يُثبّتها في مكانها'],
 ['karrie','minsitthar',58,null,'تحكّمه يقاطع دورة ضربها'],
 ['karrie','lolita',60,null,'درعها يمتص كل ضرباتها المتتالية'],
 ['karrie','moskov',55,null,'رمحه يستنزفها من مسافة أبعد'],
-['tigreal','saber',75,null,'ألته الفورية تسبق أي تدخّل'],
 ['tigreal','eudora',68,null,'صعقتها تُبعده قبل أن يجمع فريقه'],
-['akai','saber',66,null,'اغتيال سريع قبل أن يدور'],
 ['akai','moskov',64,null,'يستنزفه من مدى بعيد'],
 ['franco','tigreal',67,null,'يفتح الاشتباك قبل أن يخطّف'],
 ['franco','johnson',65,null,'يمتص خطّافه ويردّ الاشتباك'],
 ['franco','hanzo',63,null,'يهرب من الخطّاف عبر التحوّل للروح'],
-['minotaur','freya',66,null,'مبارزة سريعة تفوق تعافيه'],
-['minotaur','eudora',62,null,'صعقة فورية تمنع اندفاعه'],
+['minotaur','yve',68,2.6,'مناطقها تمنع دخوله الآمن للاشتباك'],
+['minotaur','alice',67,2.5,'تتغذّى على دمه أثناء نوبة غضبه'],
+['minotaur','beatrix',66,2.5,'أسلحتها المتعددة تستنزفه من مسافة آمنة'],
 ['lolita','clint',60,null,'يستنزفها من خلف درعها'],
 ['lolita','akai',58,null,'تحكّم مستمر يتجاوز درعها'],
 ['johnson','eudora',62,null,'صعقتها تُسقطه فور نزوله من السيارة'],
 ['johnson','kagura',60,null,'مظلتها تصدّ سيارته وتضرّه'],
 ['gatotkaca','eudora',63,null,'صعقة فورية قبل أن يبدأ ألته'],
 ['gatotkaca','karrie',61,null,'ضررها الحقيقي يخترق درعه'],
-['grock','terizla',67,null,'مطرقته تكسر جداره بضربة واحدة'],
-['grock','franco',60,null,'يخطّفه قبل أن يستقر خلف جداره'],
-['hylos','hayabusa',63,null,'يصله بسرعة قبل أن يمتص الضرر'],
-['hylos','lancelot',61,null,'انفجار سريع يتجاوز دفاعه المتصاعد'],
-['uranus','fanny',70,null,'حبالها لا تتأثر بتجدّده المستمر'],
+['grock','valentina',82,6.1,'تسرق مهارته وتقلب جداره لصالحها'],
+['grock','esmeralda',72,3.2,'تمتص ضرر جداره وتصمد في المبارزة'],
+['grock','angela',60,1.1,'تدعم حاملها لاستنزافه من خلف الجدار'],
+['hylos','karrie',57,null,'ضررها الحقيقي يتجاوز درعه المتصاعد'],
 ['uranus','cyclops',58,null,'يجمّده قبل أن يبدأ تجدّده'],
-['belerick','gusion',62,null,'انفجاره السريع يسبق رد الضرر'],
-['belerick','lancelot',60,null,'يخترقه بسرعة قبل أن يردّ'],
+['belerick','karrie',58,null,'ضررها الحقيقي يتجاوز دفاعه المتصاعد'],
 ['terizla','esmeralda',68,3.2,'بقاؤها يستنزف مطرقته البطيئة'],
 ['terizla','guinevere',63,null,'ترفعه في الهواء وتُنهي هجومه'],
-['baxia','gusion',66,null,'انفجار سريع قبل أن يقلّل العلاج'],
 ['baxia','harley',60,null,'يقتحمه بسرعة عبر التخفّي والظهور'],
 ['barats','atlas',65,null,'يسحبه بعيداً عن حجمه المتضخّم'],
 ['barats','cecilion',60,null,'ضرر تراكمي يتجاوز حجمه ببطء'],
 ['gloo','beatrix',62,null,'أسلحتها المتعددة تفكّك أشكاله'],
 ['gloo','brody',58,null,'ضربات متتالية تمنعه من الانقسام بأمان'],
 ['edith','natan',60,null,'ضرر مستمر من مسافة آمنة'],
-['edith','aamon',58,null,'يخترق درعها الآلي بسرعة'],
 ['balmond','clint',62,null,'يستنزفه قبل أن يقترب'],
 ['balmond','alucard',58,null,'مبارزة سريعة تفوق ألته الإعدامية'],
 ['alucard','eudora',65,null,'صعقة فورية تقاطع اندفاعه'],
@@ -611,12 +685,21 @@ const COUNTERS = [
 ['leomord','selena',58,null,'اغتيال فوري قبل أن يستدعي حصانه'],
 ['thamuz','selena',60,null,'اغتيال سريع يقاطع دورة تجدّده'],
 ['thamuz','lunox',58,null,'ضرر سحري يتجاوز تعافيه ببطء'],
-['badang','gusion',60,null,'انفجار سريع قبل أن يمسك بحبله'],
 ['badang','selena',56,null,'اغتيال فوري يسبق قبضته'],
+['gusion','lolita',72,2.6,'تحكّمها المستمر يُلغي اندفاعاته ويمنع إفلاته'],
+['gusion','roger',65,1.8,'يلاحقه بلا توقف ويكشف كل محاولة هروب'],
+['gusion','marcel',60,null,'تحكّمه يقاطع اندفاعاته ويمنع إفلاته'],
+['gusion','masha',58,null,'دروعها تحمي الهدف وتُصعّب اغتياله'],
+['gusion','minotaur',58,null,'تحكّمه المستمر يقاطع دخوله وخروجه'],
+['gusion','atlas',60,null,'يسحبه ويسلسله فيلغي كل اندفاعاته'],
+['gusion','belerick',56,null,'تحكّمه الصلب يحبس اندفاعاته المتكررة'],
 ['guinevere','selena',60,null,'اغتيال فوري قبل أن ترفع هدفها'],
 ['guinevere','claude',56,null,'مرآته تُبعد ضرر ألتها الجماعي'],
 ['xborg','lunox',62,null,'ضرر سحري متصاعد يخترق درعه المتجدّد'],
 ['xborg','akai',56,null,'تحكّم مستمر يمنع تفعيل درعه'],
+['xborg','ling',72,4.0,'يتجاوز درعه المتجدّد بقفزاته المتتالية'],
+['xborg','mathilda',68,3.6,'بوابتها تُفلت الهدف من درعه'],
+['xborg','valentina',65,3.1,'تسرق شكله وتقلب المبارزة'],
 ['silvanna','wanwan',58,null,'حركة عالية تفلت من نطاق سيفها'],
 ['silvanna','xborg',56,null,'درعه يستوعب ضررها التراكمي'],
 ['yuzhong','karrie',62,null,'ضرر حقيقي يتجاوز شكله التنّيني'],
@@ -627,21 +710,43 @@ const COUNTERS = [
 ['paquito','ling',56,null,'حركته العمودية تتفادى ملاحقته'],
 ['aulus','phoveus',65,null,'يعاقب اندفاعاته المتكرّرة تلقائياً'],
 ['aulus','natan',58,null,'يستنزفه من مسافة قبل تصاعد سرعته'],
+['aulus','zhuxin',60,null,'تُمسكه بسلاسلها قبل أن يتسارع'],
+['aulus','yve',58,null,'مناطقها تمنعه من التقدّم الآمن'],
+['aulus','estes',56,null,'علاجها المستمر يفوق ضغطه المبكر'],
+['aulus','floryn',55,null,'تهيمن عليه في بداية اللعبة قبل تصاعده'],
 ['yin','edith',60,null,'درعها يمتص انقضاضاته المتكررة'],
 ['yin','aamon',56,null,'اغتيال أسرع يسبق مضاعفة ضرره'],
 ['julian','aamon',58,null,'اغتيال فوري يقاطع تحوّله'],
 ['julian','edith',56,null,'درعها يستوعب ضربه المتتالي'],
-['fredrinn','xborg',60,null,'درعه المتجدّد يقاوم تخزين ضرره'],
+['julian','guinevere',60,2.1,'ترفعه في الهواء قبل أن يُكمل تحوّله'],
+['julian','minsitthar',58,1.7,'ألته تمنع كل حركاته الخاصة'],
+['julian','granger',56,1.5,'يستنزفه من مدى بعيد قبل اقترابه'],
+['julian','beatrix',56,1.5,'أسلحتها المتعددة تستنزفه من مسافة'],
+['fredrinn','xborg',60,2.4,'درعه المتجدّد يقاوم تخزين ضرره'],
 ['fredrinn','karrie',56,null,'ضرر حقيقي يتجاوز تحوّله الدفاعي'],
+['fredrinn','valir',68,3.9,'نيرانه المستمرة تستنزفه قبل تخزين طاقته'],
+['fredrinn','gord',63,2.6,'يستنزفه من الخط قبل أن يبدأ'],
+['fredrinn','cici',60,null,'تجدّدها المستمر يتفوّق على تخزينه'],
 ['arlott','thamuz',58,null,'تجدّده يفوق ضرر اندفاعاته'],
 ['arlott','nana',54,null,'تحوّلها يُفلت هدفه من قبضته'],
 ['cici','ling',58,null,'حركة أعلى تفلت من رقصها'],
 ['cici','lancelot',55,null,'انفجار أسرع يسبق تدويرها'],
 ['saber','tigreal',60,null,'ألته الفورية تمنع دخول سيبر بأمان'],
 ['saber','fanny',56,null,'حركتها العالية تفلت من ألته المستقيمة'],
+['saber','barats',68,3.2,'حجمه المتضخّم يمتص ألته الفورية'],
+['saber','johnson',60,2.3,'سيارته تصل قبل أن يُنفّذ كومبوه'],
+['saber','belerick',58,2.2,'دفاعه المتصاعد يستوعب ألته الفورية'],
+['saber','gatotkaca',56,1.8,'دفاعه المرتفع يمتص انفجاره'],
+['saber','akai',55,1.6,'دورانه المستمر يقاطع دخوله'],
 ['karina','eudora',60,null,'صعقة فورية تقاطع تحويلها للسحر'],
 ['karina','ruby',56,null,'مبارزة طويلة تستنزف انفجارها القصير'],
-['natalia','saber',58,null,'يكشفها ويقتلها رغم تخفّيها'],
+['karina','brody',74,4.1,'مدى أبعد يستنزفها قبل اقترابها'],
+['karina','granger',72,3.9,'يستنزفها من مسافة قبل أن تقترب'],
+['karina','clint',68,3.1,'دفعه الاستراتيجي يُبعدها قبل هجومها'],
+['natalia','saber',72,3.8,'ألته الفورية تكشفها وتقتلها رغم تخفّيها'],
+['natalia','karina',70,3.8,'اغتيال أسرع يسبقها في الكمين'],
+['natalia','mathilda',69,3.7,'بوابتها تُبعد هدفها قبل أن تكمن'],
+['natalia','rafaela',75,4.3,'علاجها المستمر يفوق ضررها الخفي'],
 ['natalia','kagura',54,null,'مظلتها تصدّ اغتيالها المفاجئ'],
 ['lancelot','mathilda',85,3.5,'تُبعده عن هدفه وتقاطع اندفاعاته'],
 ['lancelot','fanny',60,null,'حركة أعلى تفلته من سيوفه'],
@@ -650,6 +755,9 @@ const COUNTERS = [
 ['helcurt','hayabusa',56,null,'ظلاله تفلت من نطاق تعميته'],
 ['selena','gusion',58,null,'انفجار أسرع يسبق سهمها من العتمة'],
 ['selena','helcurt',55,null,'يكشفها قبل أن تكمن للهجوم'],
+['selena','chip',66,2.8,'بوابته الجماعية تُلغي كمينها'],
+['selena','masha',64,2.3,'ضغطها المستمر يفوق كمينها القصير'],
+['selena','gloo',63,2.3,'التصاقه يكشفها فور محاولة الاختفاء'],
 ['hanzo','leomord',58,null,'يضرب روحه الحقيقية رغم النسخ'],
 ['hanzo','selena',55,null,'سهم من العتمة يفاجئه قبل هجومه'],
 ['ling','valir',60,null,'دفعه المتكرر يفسد قفزاته'],
@@ -665,8 +773,14 @@ const COUNTERS = [
 ['nolan','martis',60,null,'قفزته تصل قبل أن يُخفي نسخته'],
 ['nolan','franco',56,null,'يخطّفه قبل أن يبدأ ظهوره المفاجئ'],
 ['nolan','khufra',58,null,'يُلغي اندفاعه ويجمّده وسط فريقه'],
+['nolan','hayabusa',63,null,'يصله من الظل بضرر انفجاري أسرع'],
+['nolan','obsidia',61,null,'ضررها المستمر يستنزفه في المبارزة'],
+['nolan','barats',58,null,'حجمه المتضخّم يمتص اندفاعاته'],
 ['suyou','badang',56,null,'قبضته تقاطع اندماج سيفيه'],
 ['suyou','edith',54,null,'درعها يمتص ضربه السريع'],
+['suyou','harith',65,2.3,'حركته العالية تفلت من هجماته'],
+['suyou','joy',63,2.1,'رقصتها تتفادى اندماج سيفيه'],
+['suyou','yve',60,1.8,'مناطقها تستنزفه قبل أن يقترب'],
 ['miya','natalia',58,null,'اغتيال صامت يسبق كل رد فعل'],
 ['miya','hayabusa',56,null,'يصلها من الظل بضرر انفجاري'],
 ['bruno','moskov',56,null,'مدى أبعد يستنزفه قبل اقترابه'],
@@ -681,6 +795,9 @@ const COUNTERS = [
 ['roger','aurora',53,null,'تجميد مستمر يمنع تحوّله للذئب'],
 ['irithel','natalia',58,null,'اغتيال صامت يسبق أي رد فعل منها'],
 ['irithel','freya',54,null,'خفّة حركة تدخل نطاقها بأمان'],
+['irithel','saber',66,2.8,'ألته الفورية تسبق أي رد فعل منها'],
+['irithel','eudora',65,2.6,'صعقة فورية تُنهيها بضربة واحدة'],
+['irithel','uranus',63,2.5,'بقاؤه المرتفع يستوعب انفجارها'],
 ['lesley','esmeralda',60,null,'تمتص طلقاتها وتصمد في المبارزة'],
 ['lesley','helcurt',54,null,'يُعميها قبل أن تتخفّى للتصويب'],
 ['hanabi','natalia',56,null,'اغتيال صامت يخترق درعها'],
@@ -719,6 +836,9 @@ const COUNTERS = [
 ['aurora','natalia',53,null,'اغتيال صامت يسبق تجميدها'],
 ['vexana','aurora',54,null,'تجميد مضاد يقاطع تعويذاتها'],
 ['vexana','karina',52,null,'اغتيال سريع قبل أن تستحضر الأرواح'],
+['lolita','vexana',60,null,'ضررها المتصاعد يتجاوز درعها'],
+['gloo','vexana',58,null,'ضررها المتصاعد يستنزفه قبل أن يلتصق'],
+['zhask','vexana',56,null,'ضررها التراكمي يفوق دفاعه'],
 ['harley','jawhead',56,null,'قذفه يمنع دخوله وخروجه الآمن'],
 ['harley','hayabusa',53,null,'يصله بالظل قبل أن يهرب'],
 ['odette','guinevere',56,null,'ترفعها قبل أن تكمل ألتها الدائرية'],
@@ -729,6 +849,9 @@ const COUNTERS = [
 ['pharsa','fanny',53,null,'وصول سريع عبر الحبال'],
 ['valir','lancelot',54,null,'انفجار سريع يقاطع دورة نيرانه'],
 ['valir','kaja',52,null,'يمسكها قبل أن تُشعل مساحتها'],
+['valir','helcurt',70,3.2,'يُعميه قبل أن يُشعل مساحته'],
+['valir','ling',68,2.9,'انفجار سريع يقتله قبل أن يضرب'],
+['valir','rafaela',72,3.4,'علاجها المستمر يفوق ضرره التراكمي'],
 ['change','saber',54,null,'ألته الفورية تُنهي جرّتها بسرعة'],
 ['change','chou',52,null,'ركلته تقاطع تدويرها لجرّاتها'],
 ['vale','chou',56,null,'ركلته تقاطع إعصارها التصاعدي'],
@@ -760,10 +883,15 @@ const COUNTERS = [
 ['rafaela','saber',54,null,'ألته الفورية تُنهيها قبل الهروب'],
 ['diggie','aldous',54,null,'يتراكم عليها بلا اعتماد على التحكّم'],
 ['diggie','lancelot',52,null,'انفجار سريع يسبق بيضتها الواقية'],
+['gloo','diggie',56,null,'يستنزفه من بعيد قبل أن يبدأ الاشتباك'],
+['ixia','kadita',58,null,'اغتيال سريع يقضي عليها قبل رد الفعل'],
+['johnson','kadita',56,null,'انفجارها السريع يتجاوز حمايته'],
 ['angela','lancelot',56,null,'انفجار سريع يقتل حاملها قبل الالتصاق'],
 ['angela','lesley',52,null,'تقنص حاملها من مسافة آمنة'],
 ['faramis','xborg',54,null,'درعه المتجدّد يقاوم إحياءها للفريق'],
 ['faramis','lylia',52,null,'قنابلها تمنع تجمّع الفريق للإحياء'],
+['sun','faramis',68,4.2,'يُنهي نسخه المتعددة ويُحيي فريقه'],
+['sun','kimmy',63,2.7,'تستنزف نسخه المتعددة بضرباتها المتتالية'],
 ['floryn','eudora',54,null,'صعقة فورية تقاطع علاجها عن بعد'],
 ['floryn','kagura',52,null,'مظلتها تصدّ علاجها المساحي'],
 ['chip','baxia',54,null,'يقلّل كل علاج بوابته الجماعية'],
@@ -785,7 +913,7 @@ const PATCH_CHANGES = [
 
 let view='home', heroSlug=null, roleFilter='all', quickSlug=null;
 let teamA=[null,null,null,null,null], teamB=[null,null,null,null,null], compareResult=null, picking=null;
-let admin={loggedIn:false, err:'', editSlug:null, bulkMsg:''};
+let admin={loggedIn:false, err:'', editSlug:null, bulkMsg:'', editCounterIdx:null, counterSearch:'', counterMsg:''};
 
 const rc = s => `var(--r-${HEROES[s].role})`;
 const avatarInner = s => HEROES[s].img
@@ -1144,6 +1272,57 @@ function renderAdmin(){
       </div>`;
     }).join('')}
   </div>
+
+  <div class="eyebrow">إضافة كاونتر جديد</div>
+  <div class="addform">
+    <label>الخصم (البطل المقهور)</label>
+    <select id="cSubject">${ks.map(k=>`<option value="${k}">${HEROES[k].ar} (${k})</option>`).join('')}</select>
+    <label>من يقهره</label>
+    <select id="cCounter">${ks.map(k=>`<option value="${k}">${HEROES[k].ar} (${k})</option>`).join('')}</select>
+    <label>درجة الفعالية (٠–١٠٠)</label>
+    <input id="cScore" type="number" min="1" max="100" value="60">
+    <label>فارق الفوز الحقيقي بالنقطة (اختياري — اتركه فارغاً إن كان تحليلياً لا مقاساً)</label>
+    <input id="cDelta" type="number" step="0.1" placeholder="مثال: 3.5">
+    <label>السبب المختصر</label>
+    <input id="cReason" placeholder="مثال: يُلغي اندفاعه ويقطع كومبوه">
+    <button class="cta" id="addCounterBtn" style="margin-top:12px">+ إضافة الكاونتر</button>
+    ${admin.counterMsg? `<p class="note" style="border:0">${admin.counterMsg}</p>`:''}
+  </div>
+
+  <div class="eyebrow">كل الكاونترات · ${COUNTERS.length}</div>
+  <div class="pickpanel" style="max-width:760px">
+    <input id="cSearch" placeholder="ابحث باسم بطل (عربي أو إنجليزي)…" value="${admin.counterSearch||''}">
+  </div>
+  <div class="atable" style="max-width:760px">
+    <div class="arow ahead" style="grid-template-columns:1fr 1fr 55px 55px 1fr 80px">
+      <span>الخصم</span><span>يقهره</span><span>الدرجة</span><span>الفارق</span><span>السبب</span><span></span></div>
+    ${COUNTERS.map((c,i)=>({c,i})).filter(({c})=>{
+      const q=(admin.counterSearch||'').trim().toLowerCase();
+      if(!q) return true;
+      const s=HEROES[c[0]], k=HEROES[c[1]];
+      return !s||!k? true : (s.ar+c[0]+k.ar+c[1]).toLowerCase().includes(q);
+    }).slice(0,150).map(({c,i})=>{
+      if(!HEROES[c[0]] || !HEROES[c[1]]) return '';
+      const editing = admin.editCounterIdx===i;
+      if(editing){
+        return `<div class="arow" style="grid-template-columns:1fr 1fr 55px 55px 1fr 80px">
+          <span>${HEROES[c[0]].ar}</span><span>${HEROES[c[1]].ar}</span>
+          <input id="ec_score" type="number" min="1" max="100" value="${c[2]}">
+          <input id="ec_delta" type="number" step="0.1" value="${c[3]!=null?c[3]:''}" placeholder="—">
+          <input id="ec_reason" value="${c[4]}">
+          <span style="display:flex;gap:4px"><button class="abtn" data-csave="${i}">حفظ</button><button class="abtn" data-ccancel="1">إلغاء</button></span>
+        </div>`;
+      }
+      return `<div class="arow" style="grid-template-columns:1fr 1fr 55px 55px 1fr 80px">
+        <span>${HEROES[c[0]].ar}</span><span>${HEROES[c[1]].ar}</span>
+        <span class="num">${c[2]}</span><span class="num">${c[3]!=null?'+'+c[3]:'—'}</span>
+        <span style="font-size:10.5px">${c[4]}</span>
+        <span style="display:flex;gap:4px"><button class="abtn" data-cedit="${i}">تعديل</button><button class="abtn del" data-cdel="${i}">حذف</button></span>
+      </div>`;
+    }).join('')}
+  </div>
+  ${COUNTERS.length>150? `<p class="note">تُعرض أول ١٥٠ نتيجة فقط — استخدم البحث لتضييق القائمة.</p>`:''}
+
   <button class="backbtn" id="logoutBtn" style="margin-top:20px">تسجيل الخروج</button>`;
 }
 
@@ -1188,7 +1367,7 @@ function bindAdmin(){
     for(let i=0;i<files.length;i++){
       const file = files[i];
       status.textContent = `جارٍ الرفع… (${i+1}/${files.length}) ${file.name}`;
-      const base = file.name.replace(/\.[^.]+$/,'');
+      const base = file.name.split('.')[0]; // ما قبل أول نقطة — يتجاهل أي امتدادات مكرَّرة مثل .webp.webp
       const slug = base.toLowerCase().replace(/[^a-z0-9]/g,'');
       if(!HEROES[slug]){ unmatched.push(file.name); continue; }
       try{
@@ -1260,6 +1439,58 @@ function bindAdmin(){
     render();
     if(DB_ENABLED){
       const { error } = await sb.from('heroes').delete().eq('slug', slug);
+      if(error) alert('حُذف محلياً لكن فشل الحذف من قاعدة البيانات: '+error.message);
+    }
+  }));
+
+  const cSearch = document.getElementById('cSearch');
+  if(cSearch) cSearch.addEventListener('input', ()=>{ admin.counterSearch = cSearch.value; render(); });
+
+  const addCounterBtn = document.getElementById('addCounterBtn');
+  if(addCounterBtn) addCounterBtn.addEventListener('click', async ()=>{
+    const subject = document.getElementById('cSubject').value;
+    const counter = document.getElementById('cCounter').value;
+    const score = Math.max(1, Math.min(100, +document.getElementById('cScore').value || 60));
+    const deltaRaw = document.getElementById('cDelta').value.trim();
+    const delta = deltaRaw? parseFloat(deltaRaw) : null;
+    const reason = document.getElementById('cReason').value.trim();
+    if(subject===counter){ alert('يجب أن يكون البطلان مختلفَين.'); return; }
+    if(!reason){ alert('اكتب سبباً مختصراً.'); return; }
+    if(COUNTERS.some(c=>c[0]===subject && c[1]===counter)){ alert('هذه المواجهة مُضافة مسبقاً — عدّلها من القائمة أدناه بدل إضافتها من جديد.'); return; }
+    COUNTERS.push([subject, counter, score, delta, reason]);
+    admin.counterMsg = `أُضيف: ${HEROES[counter].ar} يقهر ${HEROES[subject].ar} ✓`;
+    render();
+    if(DB_ENABLED){
+      const { error } = await sb.from('counters').insert({subject, counter, score, delta, reason});
+      if(error) alert('أُضيف محلياً لكن فشل الحفظ في قاعدة البيانات: '+error.message);
+    }
+  });
+
+  document.querySelectorAll('[data-cedit]').forEach(el=>el.addEventListener('click', ()=>{ admin.editCounterIdx=+el.dataset.cedit; render(); }));
+  document.querySelectorAll('[data-ccancel]').forEach(el=>el.addEventListener('click', ()=>{ admin.editCounterIdx=null; render(); }));
+  document.querySelectorAll('[data-csave]').forEach(el=>el.addEventListener('click', async ()=>{
+    const i=+el.dataset.csave, c=COUNTERS[i];
+    const [subject, counter] = c;
+    c[2] = Math.max(1, Math.min(100, +document.getElementById('ec_score').value || c[2]));
+    const deltaRaw = document.getElementById('ec_delta').value.trim();
+    c[3] = deltaRaw? parseFloat(deltaRaw) : null;
+    c[4] = document.getElementById('ec_reason').value.trim() || c[4];
+    admin.editCounterIdx = null;
+    render();
+    if(DB_ENABLED){
+      const { error } = await sb.from('counters').update({score:c[2], delta:c[3], reason:c[4]})
+        .eq('subject', subject).eq('counter', counter);
+      if(error) alert('حُفظ محلياً لكن فشل الحفظ في قاعدة البيانات: '+error.message);
+    }
+  }));
+  document.querySelectorAll('[data-cdel]').forEach(el=>el.addEventListener('click', async ()=>{
+    const i=+el.dataset.cdel, c=COUNTERS[i];
+    if(!confirm(`حذف مواجهة "${HEROES[c[1]].ar} يقهر ${HEROES[c[0]].ar}" نهائياً؟`)) return;
+    const [subject, counter] = c;
+    COUNTERS.splice(i,1);
+    render();
+    if(DB_ENABLED){
+      const { error } = await sb.from('counters').delete().eq('subject', subject).eq('counter', counter);
       if(error) alert('حُذف محلياً لكن فشل الحذف من قاعدة البيانات: '+error.message);
     }
   }));
