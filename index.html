@@ -81,15 +81,18 @@ h1,h2,.kufi{font-family:'Noto Kufi Arabic',serif;font-weight:700;letter-spacing:
 .rbtn:hover{border-color:var(--hair-2);color:var(--bone)}
 .rbtn.on{background:var(--ink-3);color:var(--bone);border-color:var(--rc,var(--hair-2))}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-top:12px;justify-content:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,120px);gap:10px;margin-top:12px;justify-content:center}
 .hcard{cursor:pointer;text-align:center;background:none;border:0;padding:0;font-family:inherit;color:inherit}
-.face{position:relative;aspect-ratio:1;overflow:hidden;border:1px solid var(--hair);
+.face{position:relative;width:120px;height:195px;margin:0 auto;overflow:hidden;border:1px solid var(--hair);
   background:radial-gradient(120% 90% at 50% 8%,color-mix(in srgb,var(--rc) 34%,transparent),transparent 62%),
   linear-gradient(180deg,var(--ink-2),var(--ink-1));display:grid;place-items:center;transition:.2s var(--ease)}
 .face b{font-family:'Chakra Petch';font-size:22px;font-weight:700;color:rgba(237,233,227,.34)}
 .face img,.mu-face img,.avatar img,.slot img,.pface img,.qface img,.mini .face img{
   width:100%;height:100%;object-fit:cover;display:block}
 .face::after{content:'';position:absolute;inset:auto 0 0 0;height:2px;background:var(--rc);opacity:.75}
+/* لوحة اختيار الأبطال (احسب أفضل اختيار / رفع الصور بالجملة) تبقى بحجمها المدمج المربّع */
+.pickpanel .grid{grid-template-columns:repeat(auto-fill,minmax(72px,1fr))}
+.pickpanel .face{width:auto;height:auto;aspect-ratio:1;margin:0}
 .hcard:hover .face{border-color:var(--rc);transform:translateY(-3px)}
 .hcard:hover .face b{color:var(--bone)}
 .tierbadge{position:absolute;top:5px;inset-inline-start:5px;font-family:'Chakra Petch';font-size:9px;font-weight:700;
@@ -172,6 +175,9 @@ h1,h2,.kufi{font-family:'Noto Kufi Arabic',serif;font-weight:700;letter-spacing:
 .pn .dt{font-size:11.5px;color:var(--bone-2);margin-top:4px}
 
 .empty{text-align:center;color:var(--bone-3);font-size:12px;padding:20px 12px;line-height:1.8}
+.rolefilterbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;
+  margin-top:18px;padding:9px 12px;background:var(--ink-1);border:1px solid var(--hair);
+  font-size:11px;color:var(--bone-2)}
 .note{font-size:10.5px;color:var(--bone-3);line-height:1.8;margin-top:16px;border-top:1px solid var(--hair);padding-top:11px}
 .backbtn{background:none;border:0;color:var(--bone-3);font-family:inherit;font-size:12px;cursor:pointer;
   display:flex;align-items:center;justify-content:center;gap:5px;margin:18px auto 0}
@@ -182,7 +188,7 @@ h1,h2,.kufi{font-family:'Noto Kufi Arabic',serif;font-weight:700;letter-spacing:
 .tierrow .t small{display:block;font-size:8px;letter-spacing:.14em;color:var(--bone-3)}
 .strip{display:flex;gap:8px;overflow-x:auto;justify-content:center;flex-wrap:wrap}
 .mini{flex:none;width:64px;text-align:center;cursor:pointer;background:none;border:0;font-family:inherit;color:inherit}
-.mini .face{aspect-ratio:1}
+.mini .face{width:auto;height:auto;aspect-ratio:1;margin:0}
 .mini .face b{font-size:16px}
 .mini .n{font-size:9.5px;margin-top:4px;color:var(--bone-2)}
 
@@ -249,13 +255,18 @@ h1,h2,.kufi{font-family:'Noto Kufi Arabic',serif;font-weight:700;letter-spacing:
 }
 .qclose{position:absolute;top:8px;left:8px;background:none;border:0;color:var(--bone-3);font-size:13px;cursor:pointer;padding:4px}
 .qclose:hover{color:var(--bone)}
-.qhead{display:flex;flex-direction:column;align-items:center;gap:7px}
-.qface{width:42px;height:42px;flex:none;border:1px solid var(--hair-2);display:grid;place-items:center;
-  background:radial-gradient(120% 90% at 50% 8%,color-mix(in srgb,var(--rc) 34%,transparent),var(--ink-2))}
-.qface b{font-family:'Chakra Petch';font-size:17px;color:var(--rc)}
+.qhead{display:flex;flex-direction:column;align-items:center;gap:8px}
+.qface{width:84px;height:136px;flex:none;border:1px solid var(--hair-2);display:grid;place-items:center;
+  overflow:hidden;background:radial-gradient(120% 90% at 50% 8%,color-mix(in srgb,var(--rc) 34%,transparent),var(--ink-2))}
+.qface b{font-family:'Chakra Petch';font-size:26px;color:var(--rc)}
 .qname{font-size:14px;font-weight:700}
 .qlane{font-size:11px;color:var(--bone-3);font-weight:500}
 .qrole{font-size:10px;color:var(--bone-3);margin-top:1px}
+.qrf{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:11px;padding:6px 8px;
+  background:var(--ink-2);border:1px solid var(--hair);font-size:9.5px;color:var(--bone-3)}
+.qrf button{background:none;border:1px solid var(--hair-2);color:var(--bone-2);padding:2px 7px;
+  font-size:9.5px;cursor:pointer;font-family:inherit}
+.qrf button:hover{color:var(--bone)}
 .qlbl{display:flex;align-items:center;justify-content:center;gap:6px;font-family:'Chakra Petch';font-size:8.5px;
   letter-spacing:.12em;text-transform:uppercase;color:var(--bone-3);margin:13px 0 6px}
 .qmatch{display:flex;justify-content:center;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--hair)}
@@ -506,7 +517,9 @@ const COUNTERS = [
 ['khufra','lunox',68,null,'تتجاوز كرته عبر أشكالها المزدوجة'],
 ['khufra','xavier',65,null,'يقصفه من مدى بعيد بلا اقتراب'],
 ['gusion','khufra',63,null,'كرته الرملية تُلغي اندفاعاته وتقطع تسلسل كومبوه'],
-['melissa','layla',72,null,'مدى مماثل يستنزفها مبكراً'],
+['melissa','layla',68,2.9,'مدى مماثل يستنزفها مبكراً'],
+['melissa','ixia',65,2.4,'رذاذها المستمر يستنزفها من مسافة'],
+['melissa','granger',62,1.8,'وصول سريع يقطع دورة رصاصاته الست ضدها'],
 ['melissa','vale',72,2.8,'يقتحم مظلتها بمهارات لا تُمنع'],
 ['melissa','yin',70,2.6,'يلاحقها عبر التضاعف بلا مهرب'],
 ['melissa','martis',63,2.0,'قفزاته المتكررة تتجاوز مظلتها'],
@@ -573,6 +586,11 @@ const COUNTERS = [
 ['miya','khufra',58,null,'تحكّمه المتسلسل يُثبّتها بلا هروب'],
 ['miya','minotaur',56,null,'تحكّمه المتسلسل يُثبّتها بلا هروب'],
 ['miya','gord',56,null,'نافذة انفجاره تفتح عليها فور اقترابها'],
+['miya','popolandkupa',54,null,'ضغط الثنائي المستمر يستنزفها في الخط'],
+['miya','natan',54,null,'نسخته المرآتية تضاعف الضغط ضدها'],
+['miya','brody',53,null,'ضربات متتالية تفوق مدى هروبها'],
+['miya','clint',53,null,'دفعه الاستراتيجي يفسد مسافتها الآمنة'],
+['miya','claude',52,null,'يستغل مرآته للرد على ضغطها'],
 
 ['marcel','angela',75,5.0,'تدعم حاملها لتفادي التجمّع في نطاق ألته'],
 ['marcel','lesley',73,4.1,'تقنصه من مدى بعيد قبل أن يقترب'],
@@ -808,6 +826,7 @@ const COUNTERS = [
 ['kimmy','aldous',53,null,'يتراكم عليها بلا اعتماد على المدى'],
 ['granger','fanny',70,3.2,'وصول سريع يقطع دورة رصاصاته الست'],
 ['granger','selena',60,null,'كمين مفاجئ يسبق استعداده'],
+['granger','obsidia',58,2.1,'ضغط مستمر يستنزف رصاصاته الست بسرعة'],
 ['wanwan','ling',62,null,'حركة عمودية تتفادى نطاق سيفها'],
 ['wanwan','esmeralda',58,null,'تمتص هجماتها المتتالية وتصمد'],
 ['popolandkupa','cecilion',56,null,'ضرر تراكمي يتفوّق على دعم الذئب'],
@@ -911,7 +930,7 @@ const PATCH_CHANGES = [
  {kind:'nerf',title:'تشوشين',detail:'تقليل طفيف لمدى إطلاق المهارة الثانية.'},
 ];
 
-let view='home', heroSlug=null, roleFilter='all', quickSlug=null;
+let view='home', heroSlug=null, roleFilter='all', quickSlug=null, heroRoleFilter='spec', quickRoleFilter='spec';
 let teamA=[null,null,null,null,null], teamB=[null,null,null,null,null], compareResult=null, picking=null;
 let admin={loggedIn:false, err:'', editSlug:null, bulkMsg:'', editCounterIdx:null, counterSearch:'', counterMsg:''};
 
@@ -923,7 +942,7 @@ const faceHTML = (s,extra)=> `<div class="face" style="--rc:${rc(s)}">${extra||'
 const hasCoverage = s => COUNTERS.some(c=>c[0]===s||c[1]===s);
 const dot = c => `<span class="dot ${c}"></span>`;
 
-function go(v, slug){ view=v; if(slug) heroSlug=slug; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+function go(v, slug){ view=v; if(slug){ heroSlug=slug; heroRoleFilter='spec'; } render(); window.scrollTo({top:0,behavior:'smooth'}); }
 
 function render(){
   document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on', b.dataset.nav===view));
@@ -1155,7 +1174,7 @@ function renderPicker(){
     </div></div>`;
 }
 
-function openQuick(slug){ quickSlug = slug; renderQuick(); }
+function openQuick(slug){ quickSlug = slug; quickRoleFilter = 'spec'; renderQuick(); }
 function closeQuick(){ quickSlug = null; renderQuick(); }
 
 function renderQuick(){
@@ -1504,6 +1523,9 @@ document.querySelector('.logo').addEventListener('click', ()=>go('home'));
 function bindDynamic(){
   document.querySelectorAll('[data-nav]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.nav)));
   document.querySelectorAll('[data-quick]').forEach(el=>el.addEventListener('click', e=>{ e.stopPropagation(); openQuick(el.dataset.quick); }));
+
+  const rfBtn = document.querySelector('[data-toggle-rf]');
+  if(rfBtn) rfBtn.addEventListener('click', ()=>{ heroRoleFilter = heroRoleFilter==='all'? 'spec' : 'all'; render(); });
 
   const roles = document.getElementById('roles');
   if(roles) roles.addEventListener('click', e=>{
